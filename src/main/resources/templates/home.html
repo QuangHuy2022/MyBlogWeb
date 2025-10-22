@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>The Future Writer | Home</title>
+
+    <!-- Bootstrap + Font -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Merriweather', serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* === Navbar === */
+        nav.navbar {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e0d6c8;
+            height: 80px;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: #000 !important;
+        }
+        .navbar-nav .nav-link {
+            color: #000 !important;
+            font-weight: 500;
+            margin: 0 10px;
+        }
+        .navbar-nav .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        /* === Hero === */
+        .hero-wrapper {
+            background-color: #d8c7b4;
+            padding: 20px;
+        }
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 30%;
+            left: 15%;
+            color: #000;
+            text-align: left;
+        }
+        .hero-text p {
+            font-size: 2rem;
+            font-style: italic;
+        }
+        .hero-text .author {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-style: italic;
+            text-align: right;
+            margin-right: 20px;
+        }
+
+        /* === Intro Section (ảnh + đoạn giới thiệu) === */
+        .intro-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin: 80px auto;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+
+        .intro-image {
+            width: 180px; /* ≈ 6cm */
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 3px solid #d8c7b4;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .intro-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .intro-image:hover {
+            transform: scale(1.05);
+        }
+
+        .intro {
+            flex: 1;
+            font-size: 1.15rem;
+            color: #3e3e3e;
+            line-height: 1.8;
+        }
+
+        .intro p + p {
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .intro-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .intro-image {
+                margin-bottom: 20px;
+            }
+        }
+         .post-card {
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.35s ease;
+        background-color: #ffffff;
+    }
+
+    .post-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .card-img-top-wrapper {
+        overflow: hidden;
+        height: 220px;
+        border-bottom: 1px solid #f1ede9;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .post-card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+
+    .card-title {
+        color: #2c2c2c;
+        font-size: 1.1rem;
+    }
+
+    .btn-outline-dark {
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-dark:hover {
+        background-color: #2c2c2c;
+        color: #fff;
+    }
+    </style>
+</head>
+
+<body>
+<!-- Navbar -->
+<div th:replace="fragments/navbar :: body"></div>
+
+<!-- Hero Section -->
+<section class="hero-wrapper">
+    <div class="hero-image">
+        <img th:src="@{/images/Ronaldo.jpg}" src="/images/Ronaldo.jpg" alt="The Future Writer banner">
+    </div>
+</section>
+
+<!-- ✅ Intro Section with Circle Image -->
+<div class="intro-section">
+    <div class="intro-image">
+        <img th:src="@{/images/chandung.jpg}" src="/images/chandunganh.jpg" alt="Author Avatar">
+    </div>
+    <div class="intro">
+        <p>
+            Xin chào, mình là Huy — một người viết thích chia sẻ về công nghệ, cuộc sống và những điều bình dị trong hành trình trở thành "người viết của tương lai".
+            Trang này được tạo ra để lưu lại những dòng suy nghĩ, cảm hứng và kiến thức mình học được mỗi ngày.
+        </p>
+        <p>Hy vọng bạn sẽ tìm thấy điều gì đó gần gũi ở đây 🌱</p>
+    </div>
+</div>
+<!-- Recent Posts Section -->
+<section class="recent-posts py-5" style="background-color: #f8f5f2;">
+    <div class="container">
+        <h2 class="text-center mb-4 fw-bold" style="color:#3e3e3e;">Bài viết mới nhất</h2>
+
+        <!-- Chia layout tự động 3 cột trên desktop, 1 cột trên mobile -->
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" th:each="post : ${latestPosts}">
+                <div class="card post-card h-100 border-0 shadow-sm">
+                    <div class="card-img-top-wrapper">
+                        <img th:src="${#strings.startsWith(post.imageUrl, 'http') ? post.imageUrl : '/' + post.imageUrl}"
+                             class="card-img-top" alt="Post image">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold" th:text="${post.title}"></h5>
+                        <p class="card-text text-muted" th:text="${#strings.abbreviate(post.content.replaceAll('<[^>]*>', ''), 150)}"></p>
+                        <a th:href="@{'/post/' + ${post.id}}" class="btn btn-outline-dark btn-sm">Đọc thêm →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="quote-section py-5 text-center">
+    <div class="container">
+        <blockquote class="blockquote fs-4 fst-italic" style="color:#4a4a4a;">
+            “Viết không chỉ là ghi lại, mà là khám phá chính mình qua từng con chữ.”
+        </blockquote>
+        <footer class="blockquote-footer mt-2" style="color:#7a7a7a;">— The Future Writer</footer>
+    </div>
+</section>
+<section class="connect-section py-5" style="background-color:#d8c7b4;">
+    <div class="container text-center text-dark">
+        <h3 class="fw-bold mb-3">Kết nối cùng mình ✉️</h3>
+        <p>Hãy theo dõi để không bỏ lỡ những bài viết mới nhất!</p>
+        <div class="mt-3">
+            <a href="http://fafacebook.com/john.david.511/" class="btn btn-outline-dark me-2"><i class="bi bi-facebook"></i> Facebook</a>
+            <a href="https://instagram.com/" class="btn btn-outline-dark me-2"><i class="bi bi-instagram"></i> Instagram</a>
+            <a href="mailto:nguyenhuyvt639@gmail.com" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Email</a>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

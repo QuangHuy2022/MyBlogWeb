@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>The Future Writer | Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap + Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f5f2;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* ====== MAIN CONTAINER ====== */
+        .blog-wrapper {
+            background-color: #fff;
+            border: 1px solid #e0d6c8;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 50px auto;
+            max-width: 1200px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        /* ====== HEADER ====== */
+        .blog-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .blog-header h1 {
+            font-weight: 700;
+            color: #2c2c2c;
+        }
+
+        .blog-header p {
+            color: #6c6c6c;
+            font-style: italic;
+        }
+
+        /* ====== POST LIST ====== */
+        .post-card {
+            border-bottom: 1px solid #eceae7;
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+        }
+
+        .post-card:last-child {
+            border-bottom: none;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .post-title a {
+            color: #2c2c2c;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .post-title a:hover {
+            color: #b47b48;
+        }
+
+        .post-meta {
+            font-size: 0.9rem;
+            color: #8a8a8a;
+            margin-bottom: 10px;
+        }
+
+        .post-excerpt {
+            color: #555;
+        }
+
+        /* ====== SIDEBAR ====== */
+        .sidebar-section {
+            border: 1px solid #2c2c2c;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .sidebar-section h5 {
+            background-color: #2c2c2c;
+            color: #fff;
+            padding: 8px 12px;
+            font-size: 1rem;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-section input[type="text"],
+        .sidebar-section select {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .latest-posts a {
+            display: block;
+            color: #2c2c2c;
+            text-decoration: none;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+            transition: color 0.2s;
+        }
+
+        .latest-posts a:hover {
+            color: #b47b48;
+        }
+
+        /* ====== PAGINATION ====== */
+        .pagination .page-item.active .page-link {
+    background-color: #000 !important; /* màu nền đen */
+    border-color: #000 !important;
+    color: #fff !important; /* chữ trắng nổi bật */
+}
+
+        .pagination .page-link {
+    color: #000 !important;
+}
+        .pagination .page-link:hover {
+    background-color: #e0e0e0 !important;
+    color: #000 !important;
+}
+    </style>
+</head>
+
+<body>
+<div th:replace="fragments/navbar :: body"></div>
+
+<!-- BLOG CONTAINER -->
+<div class="blog-wrapper">
+    <div class="blog-header">
+        <h1>The Future Writer</h1>
+        <p>Chia sẻ những góc nhìn, trải nghiệm và kiến thức mỗi ngày.</p>
+    </div>
+
+    <div class="row g-5">
+        <!-- ===== MAIN POSTS (7/10) ===== -->
+        <div class="col-md-8">
+            <div th:each="post : ${posts}" class="post-card">
+                <img th:if="${post.imageUrl}"
+                     th:src="${#strings.startsWith(post.imageUrl, 'http') ? post.imageUrl : '/' + post.imageUrl}"
+                     alt="Post image" class="post-image">
+
+                <h3 class="post-title">
+                    <a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}"></a>
+                </h3>
+
+                <p class="post-meta">
+                    <i class="bi bi-calendar"></i>
+                    <span th:text="${post.createdAt != null ? #temporals.format(post.createdAt, 'dd MMM yyyy') : 'Không rõ'}"></span>
+                </p>
+
+                <p class="post-excerpt" th:text="${#strings.abbreviate(post.content.replaceAll('<[^>]*>', ''), 150)}"></p>
+
+                <a th:href="@{/post/{id}(id=${post.id})}" class="btn btn-sm btn-outline-dark mt-2">Đọc tiếp →</a>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation" class="mt-5" th:if="${totalPages > 1}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/blog(page=${currentPage > 1 ? currentPage - 1 : 1})}">Trước</a>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+                        th:classappend="${i == currentPage} ? 'active'">
+                        <a class="page-link" th:text="${i}" th:href="@{/blog(page=${i})}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" th:href="@{/blog(page=${currentPage < totalPages ? currentPage + 1 : totalPages})}">Sau</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- ===== SIDEBAR (3/10) ===== -->
+        <div class="col-md-4">
+
+            <!-- Search -->
+            <div class="sidebar-section">
+                <h5><i class="bi bi-search"></i> Tìm kiếm</h5>
+                <form th:action="@{/blog/search}" method="get" class="search-form">
+                    <input type="text" name="keyword" placeholder="Tìm kiếm bài viết..." th:value="${keyword}" />
+                    <button type="submit">Tìm</button>
+                </form>
+            </div>
+
+            <!-- Categories -->
+            <div class="p-3 border mb-4 bg-white">
+                <h5 class="bg-dark text-white p-2">Đề tài</h5>
+                <select class="form-select mt-2"
+                        onchange="if(this.value) window.location.href='/blog/category/' + this.value;">
+                    <option disabled selected>Chọn danh mục</option>
+                    <option th:each="cat : ${categories}"
+                            th:value="${cat.id}"
+                            th:text="${cat.name}"
+                            th:selected="${cat.id == selectedCategoryId}"></option>
+
+                </select>
+            </div>
+
+            <!-- Latest Posts -->
+            <div class="sidebar-section">
+                <h5><i class="bi bi-clock-history"></i> Bài viết mới nhất</h5>
+                <div class="latest-posts">
+                    <a th:each="latest : ${latestPosts}"
+                       th:href="@{/post/{id}(id=${latest.id})}"
+                       th:text="${latest.title}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="text-center mt-5 mb-3 text-muted">
+    © 2025 The Future Writer
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

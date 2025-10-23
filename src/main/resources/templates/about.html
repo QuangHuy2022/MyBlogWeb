@@ -52,6 +52,21 @@
         .btn-custom:hover {
             transform: translateY(-2px);
         }
+        .hover-box {
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+.hover-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    background-color: #fdfdfd;
+}
+.badge {
+    font-size: 0.85em;
+    margin: 3px;
+    padding: 8px 12px;
+}
+
     </style>
 </head>
 <body>
@@ -64,54 +79,124 @@
     <img th:src="@{/images/chandunganh.jpg}" alt="Avatar" class="avatar">
 
     <!-- Thông tin cơ bản -->
-    <h2 class="fw-bold mt-3" th:text="${about.authorName}">Tên Tác Giả</h2>
-    <p class="text-muted mb-2" th:text="${about.position}">Vị trí / Nghề nghiệp</p>
+    <h2 class="fw-bold mt-3" th:text="${about.authorName}">Nguyễn Quang Huy</h2>
+    <p class="text-muted mb-2" th:text="${about.position}">Full Stack Developer</p>
     <p class="mt-3" th:text="${about.description}">
-        Mô tả ngắn về bản thân, mục tiêu và niềm đam mê với viết lách...
+        Đam mê công nghệ, lập trình và chia sẻ kiến thức cho cộng đồng.
     </p>
 
     <!-- Liên kết mạng xã hội -->
     <div class="mt-4">
-        <a href="https://github.com/topics/website"
-           target="_blank"
-           class="btn btn-dark btn-sm me-2 btn-custom">
+        <a href="https://github.com/QuangHuy2022" target="_blank" class="btn btn-dark btn-sm me-2 btn-custom">
             <i class="bi bi-github"></i> GitHub
         </a>
-        <a href="https://linkedin.com/in/ten_tai_khoan_cua_ban"
-           target="_blank"
-           class="btn btn-outline-dark btn-sm btn-custom">
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" class="btn btn-outline-dark btn-sm btn-custom">
             <i class="bi bi-linkedin"></i> LinkedIn
+        </a>
+        <a href="mailto:youremail@gmail.com" class="btn btn-outline-secondary btn-sm btn-custom">
+            <i class="bi bi-envelope"></i> Email
         </a>
     </div>
 
-    <!-- Ba khung vuông (3x3cm) -->
-    <div class="d-flex justify-content-center flex-wrap mt-5">
-        <div class="square-box">
-            <img th:src="@{/images/badgejs1.png}" alt="Ảnh 1" class="img-fluid">
+    <!-- 🔹 3 KHUNG GIỚI THIỆU NGẮN -->
+    <div class="row mt-5">
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded shadow-sm h-100 hover-box">
+                <h5 class="fw-bold text-primary mb-2">Chuyên môn</h5>
+                <p>Chuyên xây dựng các website động, hiệu quả, tối ưu trải nghiệm tới người dùng.</p>
+            </div>
         </div>
-        <div class="square-box">
-            <img th:src="@{/images/badgejs2.png}" alt="Ảnh 2" class="img-fluid">
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded shadow-sm h-100 hover-box">
+                <h5 class="fw-bold text-success mb-2">Công nghệ</h5>
+                <p>Thành thạo Backend Java, C#, các framework liên quan. Frontend với HTML, CSS, JavaScript.</p>
+            </div>
         </div>
-        <div class="square-box">
-            <img th:src="@{/images/badgenb.png}" alt="Ảnh 3" class="img-fluid">
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded shadow-sm h-100 hover-box">
+                <h5 class="fw-bold text-danger mb-2">Mục tiêu</h5>
+                <p>Xây dựng các giải pháp hiệu quả, chia sẻ kiến thức hữu ích tới cộng đồng lập trình viên.</p>
+            </div>
         </div>
     </div>
 
-    <!-- Bốn khung chữ nhật (5x3cm, chia 2 hàng) -->
-    <div class="d-flex justify-content-center flex-wrap mt-4">
-        <div class="rect-box">
-            <img th:src="@{/images/js1.png}" alt="Khung 1" class="img-fluid">
-        </div>
-        <div class="rect-box">
-            <img th:src="@{/images/js2.png}" alt="Khung 2" class="img-fluid">
-        </div>
-        <div class="rect-box">
-            <img th:src="@{/images/nb.png}" alt="Khung 3" class="img-fluid">
-        </div>
+    <!-- 🔹 PHẦN “Về tôi” -->
+    <h3 class="fw-bold mt-5 mb-4">🧑‍💻 Về tôi - Kinh nghiệm làm việc</h3>
 
+    <!-- Java Programming -->
+    <div class="p-4 mb-4 border rounded bg-light text-start">
+        <h5 class="fw-bold text-primary">Java Programming</h5>
+        <p>Chuyên sâu lập trình với Java, có kiến thức về multithreading, socket, xử lý mạng.</p>
+        <div class="mt-2">
+            <span class="badge rounded-pill bg-primary me-1">Java</span>
+            <span class="badge rounded-pill bg-secondary me-1">TCP/IP</span>
+            <span class="badge rounded-pill bg-success me-1">Socket Programming</span>
+            <span class="badge rounded-pill bg-info text-dark me-1">Multithreading</span>
+        </div>
     </div>
 
+    <!-- C# & ASP.NET -->
+    <div class="p-4 mb-4 border rounded bg-light text-start">
+        <h5 class="fw-bold text-success">C# & ASP.NET</h5>
+        <p>Phát triển ứng dụng web backend mạnh mẽ sử dụng C# và ASP.NET Core.</p>
+        <div class="mt-2">
+            <span class="badge rounded-pill bg-success me-1">C#</span>
+            <span class="badge rounded-pill bg-dark me-1">ASP.NET Core</span>
+            <span class="badge rounded-pill bg-primary me-1">Entity Framework</span>
+            <span class="badge rounded-pill bg-secondary me-1">SQL Server</span>
+            <span class="badge rounded-pill bg-info text-dark me-1">RESTful APIs</span>
+        </div>
+    </div>
+
+    <!-- 🔹 DỰ ÁN NỔI BẬT -->
+    <h3 class="fw-bold mt-5 mb-4">🚀 Dự án nổi bật</h3>
+
+    <div class="row">
+        <!-- Dự án 1 -->
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded shadow-sm project-box h-100 hover-box">
+                <h5 class="fw-bold text-primary">Blog Lập Trình Mạng</h5>
+                <p>Một blog cá nhân chia sẻ kiến thức, bài viết, và kinh nghiệm lập trình.</p>
+                <div>
+                    <span class="badge bg-primary">Java</span>
+                    <span class="badge bg-success">Spring Boot</span>
+                    <span class="badge bg-info text-dark">Thymeleaf</span>
+                    <span class="badge bg-secondary">Hibernate</span>
+                    <span class="badge bg-dark">Bootstrap</span>
+                    <span class="badge bg-danger">Render</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dự án 2 -->
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded shadow-sm project-box h-100 hover-box">
+                <h5 class="fw-bold text-success">Website Học Lập Trình (Nhóm)</h5>
+                <p>Nền tảng học tập tương tự W3Schools với bài học tương tác và hệ thống theo dõi tiến độ.</p>
+                <div>
+                    <span class="badge bg-success">C#</span>
+                    <span class="badge bg-dark">ASP.NET</span>
+                    <span class="badge bg-primary">SQL Server</span>
+                    <span class="badge bg-info text-dark">React</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dự án 3 -->
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border rounded shadow-sm project-box h-100 hover-box">
+                <h5 class="fw-bold text-danger">Game Kinh Dị 3D</h5>
+                <p>Một game sinh tồn – kinh dị với thời lượng chơi khoảng 2 tiếng, phát triển bằng Unreal Engine.</p>
+                <div>
+                    <span class="badge bg-dark">Unreal Engine</span>
+                    <span class="badge bg-secondary">Blueprint</span>
+                    <span class="badge bg-info text-dark">3D Level Design</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
